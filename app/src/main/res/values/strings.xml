@@ -2,4 +2,7 @@
     <string name="app_name">BattleBase</string>
     <string name="battle_base_home">Home</string>
     <string name="battle_base_menu">Menu</string>
+    <string name="battle_base_menu_arrow_back">Menu Arrow Back</string>
+    <string name="battle_base_menu_settings">Settings</string>
+    <string name="battle_base_menu_dark_mode">Dark Mode</string>
 </resources>
