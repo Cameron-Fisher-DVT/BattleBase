@@ -17,4 +17,8 @@ class HomeScreenViewModel(
     fun navigateToMenuScreen() = viewModelScope.launch {
         navBackStack.add(Destination.MenuScreen)
     }
+
+    fun navigateToHomeInformationScreen(pokemonId: String) = viewModelScope.launch {
+        navBackStack.add(Destination.HomeInformationScreen(pokemonId))
+    }
 }

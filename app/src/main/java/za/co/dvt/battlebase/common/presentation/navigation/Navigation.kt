@@ -7,6 +7,11 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import org.koin.androidx.compose.koinViewModel
+import za.co.dvt.battlebase.features.home.domain.model.Ability
+import za.co.dvt.battlebase.features.home.domain.model.Pokemon
+import za.co.dvt.battlebase.features.home.domain.model.Stat
+import za.co.dvt.battlebase.features.home.presentation.HomeInformationScreen
+import za.co.dvt.battlebase.features.home.presentation.HomeInformationScreenViewModel
 import za.co.dvt.battlebase.features.home.presentation.HomeScreen
 import za.co.dvt.battlebase.features.home.presentation.HomeScreenViewModel
 import za.co.dvt.battlebase.features.menu.presentation.MenuScreen
@@ -30,9 +35,12 @@ fun Navigation(
                 val homeScreenViewModel = koinViewModel<HomeScreenViewModel>()
                 HomeScreen(
                     snackbarHostState = homeScreenViewModel.snackbarHostState,
-                    loadingIndicatorState = homeScreenViewModel.loadingIndicatorState
-                ) {
-                    homeScreenViewModel.navigateToMenuScreen()
+                    loadingIndicatorState = homeScreenViewModel.loadingIndicatorState,
+                    onMenuClicked = {
+                        homeScreenViewModel.navigateToMenuScreen()
+                    }
+                ) { itemId ->
+                    homeScreenViewModel.navigateToHomeInformationScreen(itemId)
                 }
             }
 
@@ -47,6 +55,47 @@ fun Navigation(
                 ) {
                     menuScreenViewModel.onNavigateUp()
                 }
+            }
+
+            entry<Destination.HomeInformationScreen> { key ->
+                val homeInformationScreenViewModel = koinViewModel<HomeInformationScreenViewModel>()
+
+                HomeInformationScreen(
+                    pokemon = Pokemon(
+                        pokemonId = "ID",
+                        name = "Pika",
+                        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
+                        abilityList = listOf(
+                            Ability("ID", "Ability A"),
+                            Ability("ID", "Ability B"),
+                            Ability("ID", "Ability C"),
+                            Ability("ID", "Ability D"),
+                            Ability("ID", "Ability E"),
+                            Ability("ID", "Ability F"),
+                            Ability("ID", "Ability G")
+
+                        ),
+                        statsList = listOf(
+                            Stat(10, "Stat A"),
+                            Stat(10, "Stat B"),
+                            Stat(10, "Stat C"),
+                            Stat(10, "Stat D"),
+                            Stat(10, "Stat E"),
+                            Stat(10, "Stat F"),
+                            Stat(10, "Stat G"),
+                            Stat(10, "Stat H")
+
+                        ),
+                        isFavourite = false
+                    ),
+                    snackbarHostState = homeInformationScreenViewModel.snackbarHostState,
+                    onNavigateUpClicked = {
+                        homeInformationScreenViewModel.onNavigateUp()
+                    },
+                    onFavoriteClicked = {
+                        //TODO: Cache pokemon or remove from cache
+                    }
+                )
             }
         }
     )

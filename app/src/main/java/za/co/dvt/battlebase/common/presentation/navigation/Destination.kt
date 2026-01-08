@@ -9,4 +9,7 @@ sealed class Destination : NavKey {
 
     @Serializable
     data object MenuScreen : Destination()
+
+    @Serializable
+    data class HomeInformationScreen(val pokemonId: String) : Destination()
 }
