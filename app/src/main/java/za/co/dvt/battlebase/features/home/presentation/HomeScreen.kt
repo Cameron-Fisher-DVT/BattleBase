@@ -19,18 +19,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import za.co.dvt.battlebase.R
+import za.co.dvt.composeuilib.common.domain.model.Item
+import za.co.dvt.composeuilib.features.buttons.CardItemView
+import za.co.dvt.composeuilib.features.misc.LoadingIndicatorView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
+    loadingIndicatorState: State<Boolean>,
     onMenuClick: () -> Unit
 ) {
     Scaffold(
@@ -66,16 +72,16 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 //TODO: [10] - Search Functionality: Add a SearchView
-                val pokemonList = listOf<String>("Alola", "Kalos", "Johto", "Sinnoh", "Paldea") //TODO: [7] - UI Module
+                val pokemonList = listOf<String>("Alola", "Kalos", "Johto", "Sinnoh", "Paldea")
                 LazyColumn {
                     items(
                         count = pokemonList.size,
                         key = { index -> pokemonList[index] }
                     ) { index ->
-                        Text(pokemonList[index])
+                        CardItemView(itemBuilder = Item.Builder().title(pokemonList[index])) { }
                     }
                 }
-                //TODO: [7] - UI Module - Add ProgressDialogView
+                LoadingIndicatorView(isLoading = loadingIndicatorState.value)
             }
         }
     }
@@ -84,5 +90,9 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(snackbarHostState = remember { SnackbarHostState() }, onMenuClick = {})
+    HomeScreen(
+        snackbarHostState = remember { SnackbarHostState() },
+        loadingIndicatorState = remember { mutableStateOf(false) },
+        onMenuClick = {}
+    )
 }
