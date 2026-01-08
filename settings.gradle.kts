@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BattleBase"
 include(":app")
+include(":app:composeUiLib")
