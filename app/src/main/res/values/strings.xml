@@ -5,4 +5,7 @@
     <string name="battle_base_menu_arrow_back">Menu Arrow Back</string>
     <string name="battle_base_menu_settings">Settings</string>
     <string name="battle_base_menu_dark_mode">Dark Mode</string>
+
+    <string name="battle_base_items_not_saved">Items not saved.</string>
+    <string name="battle_base_successfully_saved">Successfully saved.</string>
 </resources>

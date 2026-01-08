@@ -7,10 +7,15 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import za.co.dvt.battlebase.common.presentation.BaseViewModel
 import za.co.dvt.battlebase.common.presentation.navigation.Destination
+import za.co.dvt.battlebase.features.home.domain.model.Ability
+import za.co.dvt.battlebase.features.home.domain.model.Pokemon
+import za.co.dvt.battlebase.features.home.domain.model.Stat
+import za.co.dvt.battlebase.features.home.domain.usecase.SavePokemonListUseCase
 import za.co.dvt.battlebase.features.menu.domain.usecase.GetDarkModeUseCase
 
 class HomeScreenViewModel(
     private val navBackStack: NavBackStack<Destination>,
+    private val savePokemonListUseCase: SavePokemonListUseCase,
     private val getDarkModeUseCase: GetDarkModeUseCase
 ) : BaseViewModel() {
     val isDarkModeMutableState = mutableStateOf(false)
@@ -36,5 +41,9 @@ class HomeScreenViewModel(
 
     fun isDarkMode() = viewModelScope.launch {
         isDarkModeMutableState.value = getDarkModeUseCase()
+    }
+
+    fun savePokemonList(pokemonList: List<Pokemon>) = viewModelScope.launch {
+        savePokemonListUseCase(pokemonList)
     }
 }

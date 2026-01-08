@@ -1,6 +1,5 @@
 package za.co.dvt.battlebase.features.home.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +26,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +48,7 @@ import za.co.dvt.composeuilib.features.information.LineItemView
 @Composable
 fun HomeInformationScreen(
     modifier: Modifier = Modifier,
-    pokemon: Pokemon,
+    pokemon: State<Pokemon>,
     snackbarHostState: SnackbarHostState,
     onFavoriteClicked: (pokemon: Pokemon) -> Unit,
     onNavigateUpClicked: () -> Unit
@@ -60,7 +61,7 @@ fun HomeInformationScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text(pokemon.name) },
+                title = { Text(pokemon.value.name) },
                 navigationIcon = {
                     IconButton(
                         onClick = { onNavigateUpClicked() }
@@ -70,13 +71,10 @@ fun HomeInformationScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { onNavigateUpClicked() }
+                        onClick = { onFavoriteClicked(pokemon.value.copy(isFavourite = !pokemon.value.isFavourite)) }
                     ) {
                         Icon(
-                            modifier = modifier.clickable {
-                                onFavoriteClicked(pokemon.copy(isFavourite = !pokemon.isFavourite))
-                            },
-                            imageVector = if (pokemon.isFavourite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            imageVector = if (pokemon.value.isFavourite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = stringResource(za.co.dvt.battlebase.R.string.battle_base_menu_arrow_back),
                             tint = MaterialTheme.colorScheme.secondary
                         )
@@ -103,7 +101,7 @@ fun HomeInformationScreen(
                     style = MaterialTheme.typography.titleLarge
                 )
 
-                if (pokemon.abilityList.isNotEmpty()) {
+                if (pokemon.value.abilityList.isNotEmpty()) {
 
                     Text(
                         modifier = modifier.padding(dimensions.dp16),
@@ -111,18 +109,18 @@ fun HomeInformationScreen(
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyLarge
                     )
-                    pokemon.abilityList.forEach {
+                    pokemon.value.abilityList.forEach {
                         LineItemView(label = it.name, value = "")
                     }
                 }
-                if (pokemon.statsList.isNotEmpty()) {
+                if (pokemon.value.statsList.isNotEmpty()) {
                     Text(
                         modifier = modifier.padding(dimensions.dp16),
                         text = "Stats",
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyLarge
                     )
-                    pokemon.statsList.forEach {
+                    pokemon.value.statsList.forEach {
                         LineItemView(label = it.name, value = it.score.toString())
                     }
                 }
@@ -143,7 +141,7 @@ fun HomeInformationScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 AsyncImage(
-                    model = pokemon.imageUrl,
+                    model = pokemon.value.imageUrl,
                     contentDescription = "itemImage",
                     placeholder = painterResource(R.drawable.placeholder),
                     error = painterResource(R.drawable.placeholder),
@@ -163,33 +161,14 @@ fun HomeInformationScreenPreview() {
     HomeInformationScreen(
         snackbarHostState = remember { SnackbarHostState() },
         onNavigateUpClicked = {},
-        pokemon = Pokemon(
-            pokemonId = "ID",
-            name = "Pika",
-            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
-            abilityList = listOf(
-                Ability("ID", "Ability A"),
-                Ability("ID", "Ability B"),
-                Ability("ID", "Ability C"),
-                Ability("ID", "Ability D"),
-                Ability("ID", "Ability E"),
-                Ability("ID", "Ability F"),
-                Ability("ID", "Ability G")
-
-            ),
-            statsList = listOf(
-                Stat(10, "Stat A"),
-                Stat(10, "Stat B"),
-                Stat(10, "Stat C"),
-                Stat(10, "Stat D"),
-                Stat(10, "Stat E"),
-                Stat(10, "Stat F"),
-                Stat(10, "Stat G"),
-                Stat(10, "Stat H")
-
-            ),
+        pokemon = remember { mutableStateOf(Pokemon(
+            id = "",
+            name = "",
+            imageUrl = "",
+            abilityList = listOf(),
+            statsList = listOf(),
             isFavourite = false
-        ),
+        )) },
         onFavoriteClicked = {}
     )
 }

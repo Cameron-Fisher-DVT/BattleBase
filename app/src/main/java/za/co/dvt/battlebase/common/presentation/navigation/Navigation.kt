@@ -1,6 +1,8 @@
 package za.co.dvt.battlebase.common.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entryProvider
@@ -67,39 +69,14 @@ fun Navigation(
                 val homeInformationScreenViewModel = koinViewModel<HomeInformationScreenViewModel>()
 
                 HomeInformationScreen( //TODO: Fetch Pokemon from backend by ID
-                    pokemon = Pokemon(
-                        pokemonId = "ID",
-                        name = "Pika",
-                        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
-                        abilityList = listOf(
-                            Ability("ID", "Ability A"),
-                            Ability("ID", "Ability B"),
-                            Ability("ID", "Ability C"),
-                            Ability("ID", "Ability D"),
-                            Ability("ID", "Ability E"),
-                            Ability("ID", "Ability F"),
-                            Ability("ID", "Ability G")
-
-                        ),
-                        statsList = listOf(
-                            Stat(10, "Stat A"),
-                            Stat(10, "Stat B"),
-                            Stat(10, "Stat C"),
-                            Stat(10, "Stat D"),
-                            Stat(10, "Stat E"),
-                            Stat(10, "Stat F"),
-                            Stat(10, "Stat G"),
-                            Stat(10, "Stat H")
-
-                        ),
-                        isFavourite = false
-                    ),
+                    pokemon = homeInformationScreenViewModel.selectedPokemon,
                     snackbarHostState = homeInformationScreenViewModel.snackbarHostState,
                     onNavigateUpClicked = {
                         homeInformationScreenViewModel.onNavigateUp()
                     },
-                    onFavoriteClicked = {
-                        //TODO: Cache pokemon or remove from cache
+                    onFavoriteClicked = { pokemon ->
+                        homeInformationScreenViewModel.selectedPokemon.value = pokemon
+                        homeInformationScreenViewModel.savePokemon(pokemon)
                     }
                 )
             }

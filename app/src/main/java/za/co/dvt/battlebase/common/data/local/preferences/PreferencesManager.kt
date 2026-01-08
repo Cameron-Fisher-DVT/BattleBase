@@ -1,4 +1,4 @@
-package za.co.dvt.battlebase.common.data.preferences
+package za.co.dvt.battlebase.common.data.local.preferences
 
 interface PreferencesManager {
     suspend fun saveBoolean(key: String, value: Boolean)

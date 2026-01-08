@@ -1,4 +1,4 @@
-package za.co.dvt.battlebase.common.data.preferences.datastore
+package za.co.dvt.battlebase.common.data.local.preferences.datastore
 
 import android.app.Application
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import za.co.dvt.battlebase.common.data.preferences.PreferencesManager
+import za.co.dvt.battlebase.common.data.local.preferences.PreferencesManager
 
 class JetpackDataStoreManagerImpl(
     private val application: Application

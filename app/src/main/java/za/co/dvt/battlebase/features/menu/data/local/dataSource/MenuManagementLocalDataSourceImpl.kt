@@ -1,6 +1,6 @@
 package za.co.dvt.battlebase.features.menu.data.local.dataSource
 
-import za.co.dvt.battlebase.common.data.preferences.PreferencesManager
+import za.co.dvt.battlebase.common.data.local.preferences.PreferencesManager
 
 class MenuManagementLocalDataSourceImpl(
     private val preferencesManager: PreferencesManager

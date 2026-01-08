@@ -1,7 +1,7 @@
 package za.co.dvt.battlebase.features.home.domain.model
 
 data class Pokemon(
-    val pokemonId: String,
+    val id: String,
     val name: String,
     val imageUrl: String,
     val abilityList: List<Ability>,
