@@ -37,7 +37,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
     loadingIndicatorState: State<Boolean>,
-    onMenuClick: () -> Unit
+    onMenuClicked: () -> Unit,
+    onItemClicked: (itemId: String) -> Unit
 ) {
     Scaffold(
         modifier = modifier.wrapContentSize(),
@@ -48,7 +49,7 @@ fun HomeScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            onMenuClick()
+                            onMenuClicked()
                         }
                     ) {
                         Icon(Icons.Rounded.Menu, stringResource(R.string.battle_base_menu))
@@ -78,7 +79,9 @@ fun HomeScreen(
                         count = pokemonList.size,
                         key = { index -> pokemonList[index] }
                     ) { index ->
-                        CardItemView(itemBuilder = Item.Builder().title(pokemonList[index])) { }
+                        CardItemView(itemBuilder = Item.Builder().title(pokemonList[index])) {
+                            onItemClicked(it.id)
+                        }
                     }
                 }
                 LoadingIndicatorView(isLoading = loadingIndicatorState.value)
@@ -93,6 +96,7 @@ fun HomeScreenPreview() {
     HomeScreen(
         snackbarHostState = remember { SnackbarHostState() },
         loadingIndicatorState = remember { mutableStateOf(false) },
-        onMenuClick = {}
+        onMenuClicked = {},
+        onItemClicked = {}
     )
 }
