@@ -7,12 +7,24 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import za.co.dvt.battlebase.common.presentation.BaseViewModel
 import za.co.dvt.battlebase.common.presentation.navigation.Destination
+import za.co.dvt.battlebase.features.menu.domain.usecase.GetDarkModeUseCase
 
 class HomeScreenViewModel(
-    private val navBackStack: NavBackStack<Destination>
+    private val navBackStack: NavBackStack<Destination>,
+    private val getDarkModeUseCase: GetDarkModeUseCase
 ) : BaseViewModel() {
+    val isDarkModeMutableState = mutableStateOf(false)
+
     private val loadingIndicatorMutableState = mutableStateOf(false)
     val loadingIndicatorState: State<Boolean> = loadingIndicatorMutableState
+
+    init {
+        onInit()
+    }
+
+    fun onInit() {
+        isDarkMode()
+    }
 
     fun navigateToMenuScreen() = viewModelScope.launch {
         navBackStack.add(Destination.MenuScreen)
@@ -20,5 +32,9 @@ class HomeScreenViewModel(
 
     fun navigateToHomeInformationScreen(pokemonId: String) = viewModelScope.launch {
         navBackStack.add(Destination.HomeInformationScreen(pokemonId))
+    }
+
+    fun isDarkMode() = viewModelScope.launch {
+        isDarkModeMutableState.value = getDarkModeUseCase()
     }
 }

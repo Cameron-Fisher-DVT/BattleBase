@@ -22,7 +22,6 @@ fun Navigation(
     navBackStack: NavBackStack<Destination>,
     onDarkModeToggled: (isDarkMode: Boolean) -> Unit
 ) {
-    //TODO: [03] Menu - Add ability to change dark/light mode
     NavDisplay(
         backStack = navBackStack,
         onBack = { navBackStack.removeLastOrNull() },
@@ -36,6 +35,13 @@ fun Navigation(
                 HomeScreen(
                     snackbarHostState = homeScreenViewModel.snackbarHostState,
                     loadingIndicatorState = homeScreenViewModel.loadingIndicatorState,
+                    isDarkModeState = homeScreenViewModel.isDarkModeMutableState,
+                    onInit = {
+                        homeScreenViewModel.onInit()
+                    },
+                    onDarkModeChecked = { isDarkMode ->
+                        onDarkModeToggled(isDarkMode)
+                    },
                     onMenuClicked = {
                         homeScreenViewModel.navigateToMenuScreen()
                     }
@@ -50,7 +56,7 @@ fun Navigation(
                     isDarkModeState = menuScreenViewModel.isDarkModeMutableState,
                     onDarkModeToggled = { isDarkMode ->
                         onDarkModeToggled(isDarkMode)
-                        //TODO [17] Jetpack DataStore - Save dark mode state
+                        menuScreenViewModel.saveDarkMode(isDarkMode)
                     }
                 ) {
                     menuScreenViewModel.onNavigateUp()
@@ -60,7 +66,7 @@ fun Navigation(
             entry<Destination.HomeInformationScreen> { key ->
                 val homeInformationScreenViewModel = koinViewModel<HomeInformationScreenViewModel>()
 
-                HomeInformationScreen(
+                HomeInformationScreen( //TODO: Fetch Pokemon from backend by ID
                     pokemon = Pokemon(
                         pokemonId = "ID",
                         name = "Pika",

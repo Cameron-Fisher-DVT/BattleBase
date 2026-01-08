@@ -7,7 +7,7 @@ import za.co.dvt.battlebase.features.home.presentation.HomeScreenViewModel
 
 val homeModule = module {
     viewModel {
-        HomeScreenViewModel(get())
+        HomeScreenViewModel(get(), get())
     }
     viewModel {
         HomeInformationScreenViewModel(get())
