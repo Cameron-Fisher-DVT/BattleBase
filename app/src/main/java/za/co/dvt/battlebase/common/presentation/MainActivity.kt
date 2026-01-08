@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
+import org.koin.android.ext.android.get
 import za.co.dvt.battlebase.common.presentation.navigation.Destination
 import za.co.dvt.battlebase.common.presentation.navigation.Navigation
 import za.co.dvt.battlebase.common.presentation.ui.theme.BattleBaseTheme
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BattleBaseTheme {
-                Navigation(NavBackStack(Destination.HomeScreen))
+                Navigation(get())
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import org.koin.androidx.compose.koinViewModel
 import za.co.dvt.battlebase.features.home.presentation.HomeScreen
 import za.co.dvt.battlebase.features.home.presentation.HomeScreenViewModel
 import za.co.dvt.battlebase.features.menu.MenuScreen
@@ -25,8 +26,8 @@ fun Navigation(
             rememberViewModelStoreNavEntryDecorator()
         ),
         entryProvider = entryProvider {
-            val homeScreenViewModel = HomeScreenViewModel(navBackStack)
             entry<Destination.HomeScreen> {
+                val homeScreenViewModel = koinViewModel<HomeScreenViewModel>()
                 HomeScreen(snackbarHostState = homeScreenViewModel.snackbarHostState) {
                     homeScreenViewModel.navigateToMenuScreen()
                 }
