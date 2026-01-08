@@ -12,6 +12,4 @@ class HomeScreenViewModel(
     fun navigateToMenuScreen() = viewModelScope.launch {
         navBackStack.add(Destination.MenuScreen)
     }
-
-
 }
