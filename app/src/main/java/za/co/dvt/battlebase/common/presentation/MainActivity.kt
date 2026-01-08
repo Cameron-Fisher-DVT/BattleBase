@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
 import org.koin.android.ext.android.get
@@ -21,8 +23,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BattleBaseTheme {
-                Navigation(get())
+            val darkTheme = remember { mutableStateOf(false) }
+            BattleBaseTheme(darkTheme = darkTheme.value) {
+                Navigation(get()) { isDarkMode ->
+                    darkTheme.value = isDarkMode
+                }
             }
         }
     }
