@@ -1,4 +1,4 @@
-package za.co.dvt.battlebase.ui.theme
+package za.co.dvt.battlebase.common.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
