@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import za.co.dvt.battlebase.R
 import za.co.dvt.composeuilib.common.domain.model.Item
 import za.co.dvt.composeuilib.features.buttons.CardItemView
@@ -37,9 +41,28 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
     loadingIndicatorState: State<Boolean>,
+    isDarkModeState: State<Boolean>,
+    onInit: () -> Unit,
+    onDarkModeChecked: (isDarkMode: Boolean) -> Unit,
     onMenuClicked: () -> Unit,
     onItemClicked: (itemId: String) -> Unit
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                onInit()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    onDarkModeChecked(isDarkModeState.value)
+
     Scaffold(
         modifier = modifier.wrapContentSize(),
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -96,7 +119,10 @@ fun HomeScreenPreview() {
     HomeScreen(
         snackbarHostState = remember { SnackbarHostState() },
         loadingIndicatorState = remember { mutableStateOf(false) },
+        isDarkModeState = remember { mutableStateOf(false) },
+        onInit = {},
         onMenuClicked = {},
-        onItemClicked = {}
+        onItemClicked = {},
+        onDarkModeChecked = {}
     )
 }

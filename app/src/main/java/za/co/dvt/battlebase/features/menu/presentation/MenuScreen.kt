@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,7 @@ import za.co.dvt.composeuilib.features.misc.ToggleView
 @Composable
 fun MenuScreen(
     modifier: Modifier = Modifier,
-    isDarkModeState: State<Boolean>,
+    isDarkModeState: MutableState<Boolean>,
     onDarkModeToggled: (isDarkMode: Boolean) -> Unit,
     onNavigateUpClicked: () -> Unit
 ) {
@@ -77,6 +78,7 @@ fun MenuScreen(
                     title = stringResource(R.string.battle_base_menu_dark_mode),
                     isDarkMode = isDarkModeState.value,
                     onToggled = { isDarkMode ->
+                        isDarkModeState.value = isDarkMode
                         onDarkModeToggled(isDarkMode)
                     }
                 )
