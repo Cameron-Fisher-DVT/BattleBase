@@ -36,6 +36,7 @@ fun Navigation(
                 val homeScreenViewModel = koinViewModel<HomeScreenViewModel>()
                 HomeScreen(
                     snackbarHostState = homeScreenViewModel.snackbarHostState,
+                    pokemonListUiState = homeScreenViewModel.pokemonListUiState,
                     loadingIndicatorState = homeScreenViewModel.loadingIndicatorState,
                     isDarkModeState = homeScreenViewModel.isDarkModeMutableState,
                     onInit = {
@@ -46,9 +47,12 @@ fun Navigation(
                     },
                     onMenuClicked = {
                         homeScreenViewModel.navigateToMenuScreen()
+                    },
+                    onLoadMorePokemon = {
+                        homeScreenViewModel.loadNextPage()
                     }
-                ) { itemId ->
-                    homeScreenViewModel.navigateToHomeInformationScreen(itemId)
+                ) { pokemon ->
+                    homeScreenViewModel.navigateToHomeInformationScreen(pokemon)
                 }
             }
 
@@ -67,8 +71,8 @@ fun Navigation(
 
             entry<Destination.HomeInformationScreen> { key ->
                 val homeInformationScreenViewModel = koinViewModel<HomeInformationScreenViewModel>()
-
-                HomeInformationScreen( //TODO: Fetch Pokemon from backend by ID
+                homeInformationScreenViewModel.selectedPokemon.value = key.pokemon
+                HomeInformationScreen(
                     pokemon = homeInformationScreenViewModel.selectedPokemon,
                     snackbarHostState = homeInformationScreenViewModel.snackbarHostState,
                     onNavigateUpClicked = {

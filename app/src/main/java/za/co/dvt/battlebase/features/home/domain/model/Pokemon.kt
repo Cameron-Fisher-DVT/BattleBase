@@ -1,12 +1,12 @@
 package za.co.dvt.battlebase.features.home.domain.model
 
 data class Pokemon(
-    val id: String,
-    val name: String,
-    val imageUrl: String,
-    val abilityList: List<Ability>,
-    val statsList: List<Stat>,
-    val isFavourite: Boolean
+    val id: String = "",
+    val name: String = "",
+    val imageUrl: String = "",
+    val abilityList: List<Ability> = listOf(),
+    val statsList: List<Stat> = listOf(),
+    val isFavourite: Boolean = false
 )
 
 fun Pokemon.description(): String {

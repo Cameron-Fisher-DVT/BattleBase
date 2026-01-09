@@ -8,7 +8,7 @@ import za.co.dvt.battlebase.features.home.domain.model.Ability
 import za.co.dvt.battlebase.features.home.domain.model.Pokemon
 import za.co.dvt.battlebase.features.home.domain.model.Stat
 
-object PokemonMapper {
+object LocalPokemonMapper {
     fun mapToPokemonEntity(pokemon: Pokemon): PokemonEntity {
         return PokemonEntity(
             id = pokemon.id,

@@ -15,21 +15,7 @@ class HomeInformationScreenViewModel(
     private val navBackStack: NavBackStack<Destination>,
     private val savePokemonUseCase: SavePokemonUseCase,
 ) : BaseViewModel() {
-    val selectedPokemon = mutableStateOf(Pokemon(
-        id = "id",
-        name = "name",
-        imageUrl = "url",
-        abilityList = listOf(Ability(
-            id = "id",
-            name = "name"
-        )),
-        statsList = listOf(Stat(
-            id = "id",
-            score = 10,
-            name = "name"
-        )),
-        isFavourite = false
-    ))
+    val selectedPokemon = mutableStateOf(Pokemon())
 
     fun onNavigateUp() {
         navBackStack.removeLastOrNull()
