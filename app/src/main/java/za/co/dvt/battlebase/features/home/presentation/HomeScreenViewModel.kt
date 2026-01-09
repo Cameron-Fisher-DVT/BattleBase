@@ -28,6 +28,9 @@ class HomeScreenViewModel(
     private val fetchPokemonListUseCase: FetchPokemonListUseCase,
     private val fetchPokemonInformationUseCase: FetchPokemonInformationUseCase
 ) : BaseViewModel() {
+    private companion object {
+        const val POKEMON_LIST_MAX_LIMIT = 100
+    }
     val isDarkModeMutableState = mutableStateOf(false)
 
     data class OffsetLimitState(
@@ -67,7 +70,7 @@ class HomeScreenViewModel(
         val newOffset = offsetLimitState.value.offset + (offsetLimitState.value.limit - offsetLimitState.value.offset)
         val newLimit = offsetLimitState.value.limit + (offsetLimitState.value.limit - offsetLimitState.value.offset)
 
-        if (newOffset in 0..100) {
+        if (newOffset in 0..POKEMON_LIST_MAX_LIMIT) {
             offsetLimitMutableState.value = OffsetLimitState(offset = newOffset, limit = newLimit)
             fetchPokemonList(newOffset, newLimit)
         } else {
