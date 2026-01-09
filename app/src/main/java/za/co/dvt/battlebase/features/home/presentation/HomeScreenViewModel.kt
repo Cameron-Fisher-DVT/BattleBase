@@ -110,6 +110,10 @@ class HomeScreenViewModel(
         }
     }
 
+    /*
+    * Chose this implementation to avoid hardcoded sprite URLs.
+    * Even though documentation is stable there's a possibility that URLs could change.
+    * */
     fun fetchPokemonInformationList(pokemonList: List<Pokemon>) = viewModelScope.launch {
         val deferredResults = pokemonList.associateWith { pokemon ->
             async {
