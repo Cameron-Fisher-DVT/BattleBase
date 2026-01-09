@@ -20,6 +20,13 @@ retrofit = "2.9.0"
 retrofitOkhttp = "4.9.0"
 room = "2.8.3"
 ksp = "2.2.21-2.0.4"
+junitJupiterEngine = "5.12.0"
+junitVintageEngine = "5.12.0"
+junitJupiterApi = "5.12.0"
+kotlinxCoroutinesTest = "1.6.1"
+mockkAgent = "1.13.12"
+mockkVersion = "1.13.12"
+deMannodermausAndroidJunit5 = "1.14.0.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 
@@ -67,6 +74,14 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiterApi" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
+junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintageEngine" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockkAgent" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkVersion" }
+
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
@@ -78,4 +93,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
+de-mannodermaus-android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "deMannodermausAndroidJunit5"}
 
