@@ -50,6 +50,9 @@ fun Navigation(
                     },
                     onLoadMorePokemon = {
                         homeScreenViewModel.loadNextPage()
+                    },
+                    onSearchClicked = { searchQuery ->
+                        homeScreenViewModel.searchPokemon(searchQuery)
                     }
                 ) { pokemon ->
                     homeScreenViewModel.navigateToHomeInformationScreen(pokemon)

@@ -38,6 +38,7 @@ import za.co.dvt.battlebase.features.home.domain.model.Pokemon
 import za.co.dvt.composeuilib.common.domain.model.Item
 import za.co.dvt.composeuilib.features.buttons.CardItemView
 import za.co.dvt.composeuilib.features.misc.LoadingIndicatorView
+import za.co.dvt.composeuilib.features.misc.SearchBarView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,6 +52,7 @@ fun HomeScreen(
     onDarkModeChecked: (isDarkMode: Boolean) -> Unit,
     onMenuClicked: () -> Unit,
     onLoadMorePokemon: () -> Unit,
+    onSearchClicked: (searchQuery: String) -> Unit,
     onItemClicked: (pokemon: Pokemon) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -115,7 +117,10 @@ fun HomeScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //TODO: [10] - Search Functionality: Add a SearchView
+                SearchBarView { searchQuery ->
+                    onSearchClicked(searchQuery)
+                }
+
                 LazyColumn(state = lazyListState) {
                     items(
                         count = pokemonListUiState.value.pokemonList.size,
@@ -148,6 +153,7 @@ fun HomeScreenPreview() {
         onMenuClicked = {},
         onItemClicked = {},
         onLoadMorePokemon = {},
+        onSearchClicked = {},
         onDarkModeChecked = {}
     )
 }

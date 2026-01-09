@@ -6,8 +6,10 @@ import androidx.navigation3.runtime.NavBackStack
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import kotlinx.coroutines.async
+import za.co.dvt.battlebase.R
 import za.co.dvt.battlebase.common.domain.common.Response
 import za.co.dvt.battlebase.common.presentation.BaseViewModel
+import za.co.dvt.battlebase.common.presentation.manager.resourceManager.ResourceManager
 import za.co.dvt.battlebase.common.presentation.navigation.Destination
 import za.co.dvt.battlebase.features.home.domain.model.Ability
 import za.co.dvt.battlebase.features.home.domain.model.Pokemon
@@ -20,6 +22,7 @@ import za.co.dvt.battlebase.features.menu.domain.usecase.GetDarkModeUseCase
 
 class HomeScreenViewModel(
     private val navBackStack: NavBackStack<Destination>,
+    private val resourceManager: ResourceManager,
     private val savePokemonListUseCase: SavePokemonListUseCase,
     private val getDarkModeUseCase: GetDarkModeUseCase,
     private val fetchPokemonListUseCase: FetchPokemonListUseCase,
@@ -37,6 +40,11 @@ class HomeScreenViewModel(
 
     private val loadingIndicatorMutableState = mutableStateOf(false)
     val loadingIndicatorState: State<Boolean> = loadingIndicatorMutableState
+
+    fun searchPokemon(searchQuery: String) {
+        val filteredPokemonList = pokemonListUiState.value.pokemonList.filter { it.name.contains(searchQuery, true) }
+        pokemonListMutableState.value = PokemonListUiState(pokemonList = filteredPokemonList)
+    }
 
     data class PokemonListUiState(
         val pokemonList: List<Pokemon> = emptyList(),
@@ -63,7 +71,7 @@ class HomeScreenViewModel(
             offsetLimitMutableState.value = OffsetLimitState(offset = newOffset, limit = newLimit)
             fetchPokemonList(newOffset, newLimit)
         } else {
-            displaySnackbar("No more pokemon.")
+            displaySnackbar(resourceManager.getString(R.string.battle_base_no_more_pokemon))
         }
     }
 
@@ -110,7 +118,7 @@ class HomeScreenViewModel(
             deferred.await()
         }
 
-        val successfulResults = combinedResults
+        val pokemonInformationList = combinedResults
             .filter { (_, result) -> result is Response.Success }
             .map { (pokemon, result) ->
                 val pokemonInformation = (result as Response.Success<PokemonInformation>).data
@@ -120,9 +128,9 @@ class HomeScreenViewModel(
                 )
             }
 
-        savePokemonListUseCase(successfulResults)
+        savePokemonListUseCase(pokemonInformationList)
 
         displayLoadingIndicator(false)
-        pokemonListMutableState.value = PokemonListUiState(pokemonList = successfulResults)
+        pokemonListMutableState.value = PokemonListUiState(pokemonList = pokemonInformationList)
     }
 }
