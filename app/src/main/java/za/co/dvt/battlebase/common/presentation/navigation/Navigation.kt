@@ -47,6 +47,9 @@ fun Navigation(
                     },
                     onMenuClicked = {
                         homeScreenViewModel.navigateToMenuScreen()
+                    },
+                    onLoadMorePokemon = {
+                        homeScreenViewModel.loadNextPage()
                     }
                 ) { pokemon ->
                     homeScreenViewModel.navigateToHomeInformationScreen(pokemon)

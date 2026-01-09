@@ -27,6 +27,14 @@ class HomeScreenViewModel(
 ) : BaseViewModel() {
     val isDarkModeMutableState = mutableStateOf(false)
 
+    data class OffsetLimitState(
+        val offset: Int = 0,
+        val limit: Int = 10
+    )
+
+    private val offsetLimitMutableState = mutableStateOf(OffsetLimitState())
+    val offsetLimitState: State<OffsetLimitState> = offsetLimitMutableState
+
     private val loadingIndicatorMutableState = mutableStateOf(false)
     val loadingIndicatorState: State<Boolean> = loadingIndicatorMutableState
 
@@ -44,7 +52,19 @@ class HomeScreenViewModel(
 
     fun onInit() {
         isDarkMode()
-        fetchPokemonList()
+        fetchPokemonList(offsetLimitState.value.offset, offsetLimitState.value.limit)
+    }
+
+    fun loadNextPage() = viewModelScope.launch {
+        val newOffset = offsetLimitState.value.offset + (offsetLimitState.value.limit - offsetLimitState.value.offset)
+        val newLimit = offsetLimitState.value.limit + (offsetLimitState.value.limit - offsetLimitState.value.offset)
+
+        if (newOffset in 0..100) {
+            offsetLimitMutableState.value = OffsetLimitState(offset = newOffset, limit = newLimit)
+            fetchPokemonList(newOffset, newLimit)
+        } else {
+            displaySnackbar("No more pokemon.")
+        }
     }
 
     fun navigateToMenuScreen() = viewModelScope.launch {
@@ -63,9 +83,9 @@ class HomeScreenViewModel(
         loadingIndicatorMutableState.value = shouldDisplay
     }
 
-    fun fetchPokemonList() = viewModelScope.launch {
+    fun fetchPokemonList(offset: Int, limit: Int) = viewModelScope.launch {
         displayLoadingIndicator()
-        val result = fetchPokemonListUseCase(0, 20)
+        val result = fetchPokemonListUseCase(offset, limit)
         when (result) {
             is Response.Error -> {
                 displayLoadingIndicator(false)
