@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.material.icons.extended)
 
     //Coil
     implementation(libs.coil.network.okhttp)

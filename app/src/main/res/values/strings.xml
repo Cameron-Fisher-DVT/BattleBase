@@ -9,4 +9,5 @@
     <string name="battle_base_items_not_saved">Items not saved.</string>
     <string name="battle_base_items_not_found">Items not found.</string>
     <string name="battle_base_successfully_saved">Successfully saved.</string>
+    <string name="battle_base_no_more_pokemon">No more pokemon.</string>
 </resources>
