@@ -40,6 +40,7 @@ import za.co.dvt.composeuilib.features.misc.LoadingIndicatorView
 fun HomeScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
+    pokemonListUiState: State<HomeScreenViewModel.PokemonListUiState>,
     loadingIndicatorState: State<Boolean>,
     isDarkModeState: State<Boolean>,
     onInit: () -> Unit,
@@ -96,13 +97,16 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 //TODO: [10] - Search Functionality: Add a SearchView
-                val pokemonList = listOf<String>("Alola", "Kalos", "Johto", "Sinnoh", "Paldea")
                 LazyColumn {
                     items(
-                        count = pokemonList.size,
-                        key = { index -> pokemonList[index] }
+                        count = pokemonListUiState.value.pokemonList.size,
+                        key = { index -> pokemonListUiState.value.pokemonList[index].id }
                     ) { index ->
-                        CardItemView(itemBuilder = Item.Builder().title(pokemonList[index])) {
+                        CardItemView(
+                            itemBuilder = Item.Builder()
+                                .title(pokemonListUiState.value.pokemonList[index].name)
+                                .imageUrl(pokemonListUiState.value.pokemonList[index].imageUrl)
+                        ) {
                             onItemClicked(it.id)
                         }
                     }
@@ -118,6 +122,7 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     HomeScreen(
         snackbarHostState = remember { SnackbarHostState() },
+        pokemonListUiState = remember { mutableStateOf(HomeScreenViewModel.PokemonListUiState()) },
         loadingIndicatorState = remember { mutableStateOf(false) },
         isDarkModeState = remember { mutableStateOf(false) },
         onInit = {},

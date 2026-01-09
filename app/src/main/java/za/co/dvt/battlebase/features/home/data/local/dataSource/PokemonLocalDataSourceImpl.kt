@@ -19,4 +19,13 @@ class PokemonLocalDataSourceImpl(
         pokemonDao.insertPokemonEntityWithAbilitiesAndStats(pokemonWithAbilitiesAndStats)
         return DatabaseResponse.Success(resourceManager.getString(R.string.battle_base_successfully_saved))
     }
+
+    override suspend fun fetchAllPokemonWithAbilitiesAndStats(offset: Int, limit: Int): DatabaseResponse<List<PokemonWithAbilitiesAndStats>> {
+        val pokemonWithAbilitiesList = pokemonDao.fetchAllPokemonWithAbilitiesAndStats(offset, limit)
+        return if (pokemonWithAbilitiesList.isNotEmpty()) {
+            DatabaseResponse.Success(pokemonWithAbilitiesList)
+        } else {
+            DatabaseResponse.Error(resourceManager.getString(R.string.battle_base_items_not_found))
+        }
+    }
 }

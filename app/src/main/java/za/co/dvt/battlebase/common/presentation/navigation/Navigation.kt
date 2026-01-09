@@ -36,6 +36,7 @@ fun Navigation(
                 val homeScreenViewModel = koinViewModel<HomeScreenViewModel>()
                 HomeScreen(
                     snackbarHostState = homeScreenViewModel.snackbarHostState,
+                    pokemonListUiState = homeScreenViewModel.pokemonListUiState,
                     loadingIndicatorState = homeScreenViewModel.loadingIndicatorState,
                     isDarkModeState = homeScreenViewModel.isDarkModeMutableState,
                     onInit = {
