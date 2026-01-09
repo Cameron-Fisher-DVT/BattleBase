@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.de.mannodermaus.android.junit5)
 }
 
 android {
@@ -95,4 +96,14 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.okhttp)
+
+    // JUnit 5
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.vintage.engine)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Mockk
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
 }
