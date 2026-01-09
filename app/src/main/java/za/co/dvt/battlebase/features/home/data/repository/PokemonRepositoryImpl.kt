@@ -61,7 +61,7 @@ class PokemonRepositoryImpl(
                 }
 
                 is DatabaseResponse.Success<List<PokemonWithAbilitiesAndStats>> -> {
-                    if (databaseResponse.data.size >= 20) {
+                    if (databaseResponse.data.size >= limit) {
                         Response.Success(LocalPokemonMapper.mapToPokemonList(databaseResponse.data))
                     } else {
                         fetchRemotePokemonList(offset, limit)

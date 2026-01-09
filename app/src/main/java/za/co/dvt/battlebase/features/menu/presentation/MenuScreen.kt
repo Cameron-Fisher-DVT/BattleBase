@@ -3,6 +3,7 @@ package za.co.dvt.battlebase.features.menu.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -38,7 +39,9 @@ fun MenuScreen(
     val dimensions = LocalDimensions.current
 
     Scaffold(
-        modifier = modifier.wrapContentSize(),
+        modifier = modifier
+            .wrapContentSize()
+            .safeDrawingPadding(),
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.battle_base_menu)) },
