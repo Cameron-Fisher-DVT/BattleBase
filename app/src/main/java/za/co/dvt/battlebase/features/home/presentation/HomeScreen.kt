@@ -31,6 +31,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import za.co.dvt.battlebase.R
+import za.co.dvt.battlebase.features.home.domain.model.Pokemon
 import za.co.dvt.composeuilib.common.domain.model.Item
 import za.co.dvt.composeuilib.features.buttons.CardItemView
 import za.co.dvt.composeuilib.features.misc.LoadingIndicatorView
@@ -46,7 +47,7 @@ fun HomeScreen(
     onInit: () -> Unit,
     onDarkModeChecked: (isDarkMode: Boolean) -> Unit,
     onMenuClicked: () -> Unit,
-    onItemClicked: (itemId: String) -> Unit
+    onItemClicked: (pokemon: Pokemon) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -107,7 +108,7 @@ fun HomeScreen(
                                 .title(pokemonListUiState.value.pokemonList[index].name)
                                 .imageUrl(pokemonListUiState.value.pokemonList[index].imageUrl)
                         ) {
-                            onItemClicked(it.id)
+                            onItemClicked(pokemonListUiState.value.pokemonList[index])
                         }
                     }
                 }

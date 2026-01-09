@@ -51,16 +51,12 @@ class HomeScreenViewModel(
         navBackStack.add(Destination.MenuScreen)
     }
 
-    fun navigateToHomeInformationScreen(pokemonId: String) = viewModelScope.launch {
-        navBackStack.add(Destination.HomeInformationScreen(pokemonId))
+    fun navigateToHomeInformationScreen(pokemon: Pokemon) = viewModelScope.launch {
+        navBackStack.add(Destination.HomeInformationScreen(pokemon))
     }
 
     fun isDarkMode() = viewModelScope.launch {
         isDarkModeMutableState.value = getDarkModeUseCase()
-    }
-
-    fun savePokemonList(pokemonList: List<Pokemon>) = viewModelScope.launch {
-        savePokemonListUseCase(pokemonList)
     }
 
     private fun displayLoadingIndicator(shouldDisplay: Boolean = true) {

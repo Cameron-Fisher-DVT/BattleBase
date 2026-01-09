@@ -2,6 +2,7 @@ package za.co.dvt.battlebase.common.presentation.navigation
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import za.co.dvt.battlebase.features.home.domain.model.Pokemon
 
 sealed class Destination : NavKey {
     @Serializable
@@ -11,5 +12,5 @@ sealed class Destination : NavKey {
     data object MenuScreen : Destination()
 
     @Serializable
-    data class HomeInformationScreen(val pokemonId: String) : Destination()
+    data class HomeInformationScreen(val pokemon: Pokemon) : Destination()
 }
